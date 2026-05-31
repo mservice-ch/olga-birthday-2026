@@ -396,6 +396,7 @@
     <p class="hero-eyebrow" data-en="You are warmly invited" data-ru="Вас приглашают">You are warmly invited</p>
     <h1 class="hero-name">Olga Margolin</h1>
     <p class="hero-sub" data-en="Birthday Celebration — June 2026" data-ru="День Рождения — Июнь 2026">Birthday Celebration — June 2026</p>
+    <p style="font-family:'Jost',sans-serif;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.9);margin-top:10px;opacity:0;animation:riseIn 1s 1.05s forwards;" data-en="Born 19 May" data-ru="День рождения 19 мая">Born 19 May</p>
     <p class="hero-place" data-en="Bordighera · Italian Riviera · Liguria" data-ru="Бордигера · Итальянская Ривьера · Лигурия">Bordighera · Italian Riviera · Liguria</p>
   </div>
   <div class="hero-arrow"><span></span></div>
@@ -662,13 +663,12 @@
 </footer>
 
 <!-- ═══════════════════════════════════════
-     FIREBASE
+     FIREBASE (compat SDK — no modules)
 ════════════════════════════════════════ -->
-<script type="module">
-  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-  import { getDatabase, ref, push, onValue } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
-
-  const firebaseConfig = {
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script>
+  firebase.initializeApp({
     apiKey:            "AIzaSyAsNdxoD9Syq011L8lOdXDspY46AK44xd8",
     authDomain:        "olga-birthday-be406.firebaseapp.com",
     databaseURL:       "https://olga-birthday-be406-default-rtdb.europe-west1.firebasedatabase.app",
@@ -676,60 +676,54 @@
     storageBucket:     "olga-birthday-be406.firebasestorage.app",
     messagingSenderId: "303268757868",
     appId:             "1:303268757868:web:36e10585409fe93a7ef349"
-  };
+  });
 
-  const ready = !firebaseConfig.apiKey.includes('YOUR_');
-  let db;
+  var db = firebase.database();
 
-  if (ready) {
-    document.getElementById('fb-notice').style.display = 'none';
-    const app = initializeApp(firebaseConfig);
-    db = getDatabase(app);
+  // Live messages
+  db.ref('messages').on('value', function(snap) {
+    var el = document.getElementById('msgs-list');
+    var data = snap.val();
+    if (!data) { el.innerHTML = '<p class="empty">Be the first to leave a message!</p>'; return; }
+    el.innerHTML = Object.values(data).reverse().map(function(m) {
+      return '<div class="msg-card">' +
+        '<div class="msg-author">' + esc(m.name) + '</div>' +
+        '<div class="msg-body">' + esc(m.text) + '</div>' +
+        '<div class="msg-date">' + new Date(m.ts).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}) + '</div>' +
+        '</div>';
+    }).join('');
+  });
 
-    onValue(ref(db, 'messages'), snap => {
-      const el = document.getElementById('msgs-list');
-      const data = snap.val();
-      if (!data) { el.innerHTML = '<p class="empty">Be the first to leave a message!</p>'; return; }
-      el.innerHTML = Object.values(data).reverse().map(m => `
-        <div class="msg-card">
-          <div class="msg-author">${esc(m.name)}</div>
-          <div class="msg-body">${esc(m.text)}</div>
-          <div class="msg-date">${new Date(m.ts).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}</div>
-        </div>`).join('');
-    });
+  // Live origins
+  db.ref('origins').on('value', function(snap) {
+    var el = document.getElementById('origins-chips');
+    var data = snap.val();
+    if (!data) { el.innerHTML = '<p class="empty">Be the first to mark your location!</p>'; return; }
+    el.innerHTML = Object.values(data).map(function(o) {
+      return '<div class="chip">' + esc(o.name) + ' &mdash; ' + esc(o.country) + '</div>';
+    }).join('');
+  });
 
-    onValue(ref(db, 'origins'), snap => {
-      const el = document.getElementById('origins-chips');
-      const data = snap.val();
-      if (!data) { el.innerHTML = '<p class="empty">Be the first to mark your location!</p>'; return; }
-      el.innerHTML = Object.values(data).map(o =>
-        `<div class="chip">${esc(o.name)} &mdash; ${esc(o.country)}</div>`
-      ).join('');
-    });
-  }
-
-  window.submitMsg = () => {
-    const name = document.getElementById('msg-name').value.trim();
-    const text = document.getElementById('msg-text').value.trim();
-    if (!ready) { alert('Firebase not set up yet — see the guide below.'); return; }
+  function submitMsg() {
+    var name = document.getElementById('msg-name').value.trim();
+    var text = document.getElementById('msg-text').value.trim();
     if (!name || !text) { alert('Please fill in your name and a message.'); return; }
-    push(ref(db, 'messages'), { name, text, ts: Date.now() });
+    db.ref('messages').push({ name: name, text: text, ts: Date.now() });
     document.getElementById('msg-name').value = '';
     document.getElementById('msg-text').value = '';
-  };
+  }
 
-  window.addOrigin = () => {
-    const name = document.getElementById('org-name').value.trim();
-    const country = document.getElementById('org-country').value;
-    if (!ready) { alert('Firebase not set up yet — see the guide below.'); return; }
+  function addOrigin() {
+    var name = document.getElementById('org-name').value.trim();
+    var country = document.getElementById('org-country').value;
     if (!name || !country) { alert('Please enter your name and select a country.'); return; }
-    push(ref(db, 'origins'), { name, country });
+    db.ref('origins').push({ name: name, country: country });
     document.getElementById('org-name').value = '';
     document.getElementById('org-country').value = '';
-  };
+  }
 
   function esc(s) {
-    const d = document.createElement('div');
+    var d = document.createElement('div');
     d.appendChild(document.createTextNode(String(s)));
     return d.innerHTML;
   }

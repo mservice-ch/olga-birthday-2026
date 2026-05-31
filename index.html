@@ -337,6 +337,42 @@
     .msg-date { font-size: 10px; color: var(--text2); opacity: 0.5; margin-top: 8px; letter-spacing: 0.5px; }
     .empty { text-align: center; color: var(--text2); opacity: 0.5; padding: 32px; font-size: 13px; }
 
+    /* ─────────────────────────────────────
+       QUIZZES
+    ───────────────────────────────────── */
+    .quiz-card {
+      background: var(--white); border-radius: 4px;
+      border-top: 4px solid var(--olive);
+      padding: 28px 32px; box-shadow: 0 4px 24px rgba(42,31,24,0.07);
+    }
+    .quiz-title {
+      font-family: 'Cormorant Garamond', serif; font-size: 22px;
+      font-weight: 500; color: var(--text); margin-bottom: 12px;
+    }
+    .quiz-winner-display {
+      font-size: 15px; font-weight: 600; color: var(--olive);
+      letter-spacing: 0.5px; margin-bottom: 10px; min-height: 22px;
+    }
+    .quiz-entry {
+      display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .quiz-input {
+      flex: 1; min-width: 160px; padding: 10px 14px;
+      background: var(--cream); border: 1px solid rgba(42,31,24,0.18);
+      border-radius: 2px; color: var(--text); font-family: 'Jost', sans-serif;
+      font-size: 13px; outline: none; transition: border-color 0.25s;
+    }
+    .quiz-input:focus { border-color: var(--olive); }
+    .quiz-unlock-btn {
+      background: none; border: 1px solid rgba(90,110,58,0.4);
+      color: var(--olive); border-radius: 2px; padding: 7px 18px;
+      font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 600;
+      letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quiz-unlock-btn:hover { background: var(--olive); color: var(--white); }
+
     /* Firebase notice */
     .fb-box {
       background: #fff8ec; border: 1px solid rgba(181,137,46,0.35);
@@ -546,15 +582,15 @@
         </div>
         <div style="display:flex;gap:20px;align-items:baseline;">
           <span style="color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;min-width:110px;">18:30 – 19:30</span>
-          <span style="font-size:14px;color:var(--text2);line-height:1.6;" data-en="Quizzes and fun" data-ru="Викторины и веселье">Quizzes and fun</span>
+          <span style="font-size:14px;color:var(--text2);line-height:1.6;" data-en="Quizzes and fun — <a href='#quizzes' style='color:var(--coral);font-weight:600;'>see quizzes</a>" data-ru="Викторины и веселье — <a href='#quizzes' style='color:var(--coral);font-weight:600;'>викторины</a>">Quizzes and fun — <a href="#quizzes" style="color:var(--coral);font-weight:600;">see quizzes</a></span>
         </div>
         <div style="display:flex;gap:20px;align-items:baseline;">
           <span style="color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;min-width:110px;">19:30 – 20:30</span>
-          <span style="font-size:14px;color:var(--text2);line-height:1.6;" data-en="Toasts and stories" data-ru="Тосты и истории">Toasts and stories</span>
+          <span style="font-size:14px;color:var(--text2);line-height:1.6;" data-en="Toasts and stories — <a href='#toast-queue' style='color:var(--coral);font-weight:600;'>sign up below</a>" data-ru="Тосты и истории — <a href='#toast-queue' style='color:var(--coral);font-weight:600;'>записаться ниже</a>">Toasts and stories — <a href="#toast-queue" style="color:var(--coral);font-weight:600;">sign up below</a></span>
         </div>
         <div style="display:flex;gap:20px;align-items:baseline;">
           <span style="color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;min-width:110px;">20:30 – 21:45</span>
-          <span style="font-size:14px;color:var(--text2);line-height:1.6;" data-en="DJ and dancing" data-ru="DJ и танцы">DJ and dancing</span>
+          <span style="font-size:14px;color:var(--text2);line-height:1.6;" data-en="DJ and dancing — <a href='#dj-requests' style='color:var(--coral);font-weight:600;'>request a song</a>" data-ru="DJ и танцы — <a href='#dj-requests' style='color:var(--coral);font-weight:600;'>заказать песню</a>">DJ and dancing — <a href="#dj-requests" style="color:var(--coral);font-weight:600;">request a song</a></span>
         </div>
         <div style="display:flex;gap:20px;align-items:baseline;">
           <span style="color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;min-width:110px;">21:45 – 22:00</span>
@@ -562,7 +598,7 @@
         </div>
         <div style="display:flex;gap:20px;align-items:baseline;">
           <span style="color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;min-width:110px;">22:00 – night</span>
-          <span style="font-size:14px;color:var(--text2);line-height:1.6;" data-en="More DJ and dancing" data-ru="Ещё DJ и танцы">More DJ and dancing</span>
+          <span style="font-size:14px;color:var(--text2);line-height:1.6;" data-en="More DJ and dancing — <a href='#dj-requests' style='color:var(--coral);font-weight:600;'>request a song</a>" data-ru="Ещё DJ и танцы — <a href='#dj-requests' style='color:var(--coral);font-weight:600;'>заказать песню</a>">More DJ and dancing — <a href="#dj-requests" style="color:var(--coral);font-weight:600;">request a song</a></span>
         </div>
       </div>
     </div>
@@ -600,6 +636,92 @@
   </div>
   ════════════════════════════════════════
   -->
+</section>
+
+<!-- ═══════════════════════════════════════
+     QUIZZES
+════════════════════════════════════════ -->
+<section id="quizzes" style="background:var(--cream);padding:80px 24px;">
+  <h2 class="sec-title" data-en="The <em>Quizzes</em>" data-ru="<em>Викторины</em>">The <em>Quizzes</em></h2>
+  <div class="sec-rule"></div>
+  <div style="max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:18px;">
+
+    <!-- Quiz 1 -->
+    <div class="quiz-card" id="quiz-trivia">
+      <div class="quiz-title">Trivia Quiz by Dani, Ixchel &amp; Serge</div>
+      <div class="quiz-winner-display" id="winner-trivia-display"></div>
+      <div class="quiz-entry" id="quiz-trivia-entry" style="display:none;">
+        <input type="text" class="quiz-input" id="winner-trivia" placeholder="Winner's name">
+        <button class="btn-fill" onclick="setWinner('trivia')" data-en="Save" data-ru="Сохранить">Save</button>
+      </div>
+      <button class="quiz-unlock-btn" onclick="unlockQuiz('trivia')" id="unlock-trivia" data-en="Set winner" data-ru="Ввести победителя">Set winner</button>
+    </div>
+
+    <!-- Quiz 2 -->
+    <div class="quiz-card" id="quiz-julia">
+      <div class="quiz-title">Quiz by Julia</div>
+      <div class="quiz-winner-display" id="winner-julia-display"></div>
+      <div class="quiz-entry" id="quiz-julia-entry" style="display:none;">
+        <input type="text" class="quiz-input" id="winner-julia" placeholder="Winner's name">
+        <button class="btn-fill" onclick="setWinner('julia')" data-en="Save" data-ru="Сохранить">Save</button>
+      </div>
+      <button class="quiz-unlock-btn" onclick="unlockQuiz('julia')" id="unlock-julia" data-en="Set winner" data-ru="Ввести победителя">Set winner</button>
+    </div>
+
+    <!-- Quiz 3 -->
+    <div class="quiz-card" id="quiz-geo">
+      <div class="quiz-title">Geo Quiz by Serge</div>
+      <div class="quiz-winner-display" id="winner-geo-display"></div>
+      <div class="quiz-entry" id="quiz-geo-entry" style="display:none;">
+        <input type="text" class="quiz-input" id="winner-geo" placeholder="Winner's name">
+        <button class="btn-fill" onclick="setWinner('geo')" data-en="Save" data-ru="Сохранить">Save</button>
+      </div>
+      <button class="quiz-unlock-btn" onclick="unlockQuiz('geo')" id="unlock-geo" data-en="Set winner" data-ru="Ввести победителя">Set winner</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     TOAST QUEUE
+════════════════════════════════════════ -->
+<section id="toast-queue" style="background:var(--white);padding:80px 24px;">
+  <h2 class="sec-title" data-en="Toast <em>Queue</em>" data-ru="Очередь <em>Тостов</em>">Toast <em>Queue</em></h2>
+  <div class="sec-rule"></div>
+  <div style="max-width:600px;margin:0 auto;">
+    <p style="text-align:center;font-size:14px;color:var(--text2);margin-bottom:32px;line-height:1.8;" data-en="Want to say a few words for Olga during the toasts? Add your name to the queue." data-ru="Хотите сказать несколько слов для Ольги во время тостов? Добавьте своё имя в очередь.">Want to say a few words for Olga during the toasts? Add your name to the queue.</p>
+    <div style="display:flex;gap:10px;margin-bottom:32px;flex-wrap:wrap;">
+      <input type="text" id="toast-name" placeholder="Your name / Ваше имя" maxlength="40"
+        style="flex:1;min-width:160px;padding:12px 16px;background:var(--cream);border:1px solid rgba(42,31,24,0.18);border-radius:2px;color:var(--text);font-family:'Jost',sans-serif;font-size:13px;outline:none;">
+      <input type="text" id="toast-note" placeholder="Optional note / Заметка (необязательно)" maxlength="60"
+        style="flex:2;min-width:200px;padding:12px 16px;background:var(--cream);border:1px solid rgba(42,31,24,0.18);border-radius:2px;color:var(--text);font-family:'Jost',sans-serif;font-size:13px;outline:none;">
+      <button onclick="addToast()" class="btn-fill" data-en="Join queue" data-ru="В очередь">Join queue</button>
+    </div>
+    <div id="toast-list" style="display:flex;flex-direction:column;gap:10px;">
+      <p class="empty" data-en="No one in the queue yet — be the first!" data-ru="Очередь пуста — будьте первым!">No one in the queue yet — be the first!</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     DJ REQUESTS
+════════════════════════════════════════ -->
+<section id="dj-requests" style="background:var(--cream2);padding:80px 24px;">
+  <h2 class="sec-title" data-en="Request a <em>Song</em>" data-ru="Заказать <em>Песню</em>">Request a <em>Song</em></h2>
+  <div class="sec-rule"></div>
+  <div style="max-width:600px;margin:0 auto;">
+    <p style="text-align:center;font-size:14px;color:var(--text2);margin-bottom:32px;line-height:1.8;" data-en="Got a song you want to dance to? Submit it for the DJ." data-ru="Есть песня, под которую хочется потанцевать? Отправьте её DJ.">Got a song you want to dance to? Submit it for the DJ.</p>
+    <div style="display:flex;gap:10px;margin-bottom:32px;flex-wrap:wrap;">
+      <input type="text" id="dj-song" placeholder="Song &amp; Artist / Песня и исполнитель" maxlength="80"
+        style="flex:2;min-width:200px;padding:12px 16px;background:var(--white);border:1px solid rgba(42,31,24,0.18);border-radius:2px;color:var(--text);font-family:'Jost',sans-serif;font-size:13px;outline:none;">
+      <input type="text" id="dj-from" placeholder="Your name / Ваше имя" maxlength="40"
+        style="flex:1;min-width:140px;padding:12px 16px;background:var(--white);border:1px solid rgba(42,31,24,0.18);border-radius:2px;color:var(--text);font-family:'Jost',sans-serif;font-size:13px;outline:none;">
+      <button onclick="addDjRequest()" class="btn-fill" data-en="Submit" data-ru="Отправить">Submit</button>
+    </div>
+    <div id="dj-list" style="display:flex;flex-direction:column;gap:10px;">
+      <p class="empty" data-en="No requests yet — be the first!" data-ru="Заявок пока нет — будьте первым!">No requests yet — be the first!</p>
+    </div>
+  </div>
 </section>
 
 <!-- ═══════════════════════════════════════
@@ -713,6 +835,69 @@
     document.getElementById('msg-text').value = '';
   }
 
+  // Toast queue
+  db.ref('toasts').on('value', function(snap) {
+    var el = document.getElementById('toast-list');
+    var data = snap.val();
+    if (!data) { el.innerHTML = '<p class="empty">No one in the queue yet — be the first!</p>'; return; }
+    var items = Object.entries(data).sort(function(a,b){ return a[1].ts - b[1].ts; });
+    el.innerHTML = items.map(function(entry, i) {
+      var key = entry[0], item = entry[1];
+      return '<div style="display:flex;align-items:center;gap:16px;padding:14px 20px;background:var(--cream);border-left:3px solid var(--gold);">' +
+        '<span style="font-family:\'Cormorant Garamond\',serif;font-size:22px;font-weight:600;color:var(--gold);min-width:28px;">' + (i+1) + '</span>' +
+        '<div style="flex:1;">' +
+          '<div style="font-weight:600;font-size:14px;">' + esc(item.name) + '</div>' +
+          (item.note ? '<div style="font-size:12px;color:var(--text2);opacity:0.7;margin-top:2px;">' + esc(item.note) + '</div>' : '') +
+        '</div>' +
+        '<button onclick="removeToast(\'' + key + '\')" style="background:none;border:none;cursor:pointer;color:var(--text2);opacity:0.35;font-size:18px;padding:4px 8px;line-height:1;" title="Remove">&#x2715;</button>' +
+      '</div>';
+    }).join('');
+  });
+
+  function addToast() {
+    var name = document.getElementById('toast-name').value.trim();
+    var note = document.getElementById('toast-note').value.trim();
+    if (!name) { alert('Please enter your name.'); return; }
+    db.ref('toasts').push({ name: name, note: note, ts: Date.now() });
+    document.getElementById('toast-name').value = '';
+    document.getElementById('toast-note').value = '';
+  }
+
+  function removeToast(key) {
+    db.ref('toasts/' + key).remove();
+  }
+
+  // DJ requests
+  db.ref('dj').on('value', function(snap) {
+    var el = document.getElementById('dj-list');
+    var data = snap.val();
+    if (!data) { el.innerHTML = '<p class="empty">No requests yet — be the first!</p>'; return; }
+    var items = Object.entries(data).sort(function(a,b){ return a[1].ts - b[1].ts; });
+    el.innerHTML = items.map(function(entry) {
+      var key = entry[0], item = entry[1];
+      return '<div style="display:flex;align-items:center;gap:16px;padding:14px 20px;background:var(--white);border-left:3px solid var(--blue);">' +
+        '<div style="flex:1;">' +
+          '<div style="font-weight:600;font-size:14px;">' + esc(item.song) + '</div>' +
+          '<div style="font-size:12px;color:var(--text2);opacity:0.6;margin-top:2px;">from ' + esc(item.from) + '</div>' +
+        '</div>' +
+        '<button onclick="removeDjRequest(\'' + key + '\')" style="background:none;border:none;cursor:pointer;color:var(--text2);opacity:0.35;font-size:18px;padding:4px 8px;line-height:1;" title="Remove">&#x2715;</button>' +
+      '</div>';
+    }).join('');
+  });
+
+  function addDjRequest() {
+    var song = document.getElementById('dj-song').value.trim();
+    var from = document.getElementById('dj-from').value.trim();
+    if (!song || !from) { alert('Please enter the song and your name.'); return; }
+    db.ref('dj').push({ song: song, from: from, ts: Date.now() });
+    document.getElementById('dj-song').value = '';
+    document.getElementById('dj-from').value = '';
+  }
+
+  function removeDjRequest(key) {
+    db.ref('dj/' + key).remove();
+  }
+
   function addOrigin() {
     var name = document.getElementById('org-name').value.trim();
     var country = document.getElementById('org-country').value;
@@ -720,6 +905,35 @@
     db.ref('origins').push({ name: name, country: country });
     document.getElementById('org-name').value = '';
     document.getElementById('org-country').value = '';
+  }
+
+  // Quizzes
+  db.ref('quizzes').on('value', function(snap) {
+    var data = snap.val() || {};
+    ['trivia', 'julia', 'geo'].forEach(function(id) {
+      var el = document.getElementById('winner-' + id + '-display');
+      if (!el) return;
+      var winner = data[id] && data[id].winner;
+      el.textContent = winner ? 'Winner: ' + winner : '';
+    });
+  });
+
+  function unlockQuiz(id) {
+    var pw = prompt('Enter password to set the winner:');
+    if (pw !== '0lgaF3st') { if (pw !== null) alert('Wrong password.'); return; }
+    var entry = document.getElementById('quiz-' + id + '-entry');
+    var btn   = document.getElementById('unlock-' + id);
+    if (entry) entry.style.display = 'flex';
+    if (btn)   btn.style.display   = 'none';
+  }
+
+  function setWinner(id) {
+    var name = document.getElementById('winner-' + id).value.trim();
+    if (!name) { alert('Please enter a winner name.'); return; }
+    db.ref('quizzes/' + id).set({ winner: name });
+    document.getElementById('quiz-' + id + '-entry').style.display = 'none';
+    document.getElementById('unlock-' + id).style.display = '';
+    document.getElementById('winner-' + id).value = '';
   }
 
   function esc(s) {

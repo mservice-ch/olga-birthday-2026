@@ -398,6 +398,12 @@
       transition: all 0.2s;
     }
     .quiz-unlock-btn:hover { background: var(--olive); color: var(--white); }
+    .quiz-pw-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+    .quiz-cancel-btn {
+      background: none; border: none; cursor: pointer;
+      font-size: 12px; color: var(--text2); text-decoration: underline;
+      font-family: 'Jost', sans-serif; padding: 4px 8px;
+    }
 
     /* Firebase notice */
     .fb-box {
@@ -513,6 +519,13 @@
     </div>
     <div style="text-align:center;margin-top:28px;">
       <button class="quiz-unlock-btn" onclick="unlockNews()" id="news-unlock-btn" data-en="Post news" data-ru="Добавить новость">Post news</button>
+    </div>
+    <div id="news-pw-row" style="display:none;margin-top:16px;max-width:400px;margin-left:auto;margin-right:auto;display:none;">
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+        <input type="password" id="news-pw-input" placeholder="Password" class="quiz-input" style="flex:1;">
+        <button class="btn-fill" onclick="checkNewsPw()" data-en="OK" data-ru="OK">OK</button>
+        <button class="quiz-cancel-btn" onclick="cancelNews()" data-en="Cancel" data-ru="Отмена">Cancel</button>
+      </div>
     </div>
     <div class="news-add-form" id="news-add-form">
       <input type="text" id="news-title-input" placeholder="Headline / Заголовок" maxlength="80">
@@ -711,9 +724,15 @@
     <div class="quiz-card" id="quiz-trivia">
       <div class="quiz-title">Trivia Quiz by Dani, Ixchel &amp; Serge</div>
       <div class="quiz-winner-display" id="winner-trivia-display"></div>
+      <div class="quiz-pw-row" id="quiz-trivia-pw" style="display:none;">
+        <input type="password" class="quiz-input" id="pw-trivia" placeholder="Password">
+        <button class="btn-fill" onclick="checkQuizPw('trivia')" data-en="OK" data-ru="OK">OK</button>
+        <button class="quiz-cancel-btn" onclick="cancelQuiz('trivia')" data-en="Cancel" data-ru="Отмена">Cancel</button>
+      </div>
       <div class="quiz-entry" id="quiz-trivia-entry" style="display:none;">
         <input type="text" class="quiz-input" id="winner-trivia" placeholder="Winner's name">
         <button class="btn-fill" onclick="setWinner('trivia')" data-en="Save" data-ru="Сохранить">Save</button>
+        <button class="quiz-cancel-btn" onclick="cancelQuiz('trivia')" data-en="Cancel" data-ru="Отмена">Cancel</button>
       </div>
       <button class="quiz-unlock-btn" onclick="unlockQuiz('trivia')" id="unlock-trivia" data-en="Set winner" data-ru="Ввести победителя">Set winner</button>
     </div>
@@ -722,9 +741,15 @@
     <div class="quiz-card" id="quiz-julia">
       <div class="quiz-title">Quiz by Julia</div>
       <div class="quiz-winner-display" id="winner-julia-display"></div>
+      <div class="quiz-pw-row" id="quiz-julia-pw" style="display:none;">
+        <input type="password" class="quiz-input" id="pw-julia" placeholder="Password">
+        <button class="btn-fill" onclick="checkQuizPw('julia')" data-en="OK" data-ru="OK">OK</button>
+        <button class="quiz-cancel-btn" onclick="cancelQuiz('julia')" data-en="Cancel" data-ru="Отмена">Cancel</button>
+      </div>
       <div class="quiz-entry" id="quiz-julia-entry" style="display:none;">
         <input type="text" class="quiz-input" id="winner-julia" placeholder="Winner's name">
         <button class="btn-fill" onclick="setWinner('julia')" data-en="Save" data-ru="Сохранить">Save</button>
+        <button class="quiz-cancel-btn" onclick="cancelQuiz('julia')" data-en="Cancel" data-ru="Отмена">Cancel</button>
       </div>
       <button class="quiz-unlock-btn" onclick="unlockQuiz('julia')" id="unlock-julia" data-en="Set winner" data-ru="Ввести победителя">Set winner</button>
     </div>
@@ -733,9 +758,15 @@
     <div class="quiz-card" id="quiz-geo">
       <div class="quiz-title">Geo Quiz by Serge</div>
       <div class="quiz-winner-display" id="winner-geo-display"></div>
+      <div class="quiz-pw-row" id="quiz-geo-pw" style="display:none;">
+        <input type="password" class="quiz-input" id="pw-geo" placeholder="Password">
+        <button class="btn-fill" onclick="checkQuizPw('geo')" data-en="OK" data-ru="OK">OK</button>
+        <button class="quiz-cancel-btn" onclick="cancelQuiz('geo')" data-en="Cancel" data-ru="Отмена">Cancel</button>
+      </div>
       <div class="quiz-entry" id="quiz-geo-entry" style="display:none;">
         <input type="text" class="quiz-input" id="winner-geo" placeholder="Winner's name">
         <button class="btn-fill" onclick="setWinner('geo')" data-en="Save" data-ru="Сохранить">Save</button>
+        <button class="quiz-cancel-btn" onclick="cancelQuiz('geo')" data-en="Cancel" data-ru="Отмена">Cancel</button>
       </div>
       <button class="quiz-unlock-btn" onclick="unlockQuiz('geo')" id="unlock-geo" data-en="Set winner" data-ru="Ввести победителя">Set winner</button>
     </div>
@@ -984,11 +1015,27 @@
     }).join('');
   });
 
+  // ── NEWS ──────────────────────────────────────────────────────
   function unlockNews() {
-    var pw = prompt('Enter password:');
-    if (pw !== '0lgaF3st') { if (pw !== null) alert('Wrong password.'); return; }
-    document.getElementById('news-add-form').style.display = 'block';
     document.getElementById('news-unlock-btn').style.display = 'none';
+    var row = document.getElementById('news-pw-row');
+    row.style.display = 'block';
+    document.getElementById('news-pw-input').value = '';
+    document.getElementById('news-pw-input').focus();
+  }
+
+  function checkNewsPw() {
+    var pw = document.getElementById('news-pw-input').value;
+    if (pw !== '0lgaF3st') { document.getElementById('news-pw-input').value = ''; document.getElementById('news-pw-input').placeholder = 'Wrong password — try again'; return; }
+    document.getElementById('news-pw-row').style.display = 'none';
+    document.getElementById('news-add-form').style.display = 'block';
+    document.getElementById('news-title-input').focus();
+  }
+
+  function cancelNews() {
+    document.getElementById('news-pw-row').style.display = 'none';
+    document.getElementById('news-add-form').style.display = 'none';
+    document.getElementById('news-unlock-btn').style.display = 'inline-block';
   }
 
   function postNews() {
@@ -1008,7 +1055,7 @@
     });
   }
 
-  // Quizzes
+  // ── QUIZZES ───────────────────────────────────────────────────
   db.ref('quizzes').on('value', function(snap) {
     var data = snap.val() || {};
     ['trivia', 'julia', 'geo'].forEach(function(id) {
@@ -1020,12 +1067,25 @@
   });
 
   function unlockQuiz(id) {
-    var pw = prompt('Enter password to set the winner:');
-    if (pw !== '0lgaF3st') { if (pw !== null) alert('Wrong password.'); return; }
-    var entry = document.getElementById('quiz-' + id + '-entry');
-    var btn   = document.getElementById('unlock-' + id);
-    if (entry) entry.style.display = 'flex';
-    if (btn)   btn.style.display   = 'none';
+    document.getElementById('unlock-' + id).style.display = 'none';
+    var row = document.getElementById('quiz-' + id + '-pw');
+    row.style.display = 'flex';
+    document.getElementById('pw-' + id).value = '';
+    document.getElementById('pw-' + id).focus();
+  }
+
+  function checkQuizPw(id) {
+    var pw = document.getElementById('pw-' + id).value;
+    if (pw !== '0lgaF3st') { document.getElementById('pw-' + id).value = ''; document.getElementById('pw-' + id).placeholder = 'Wrong — try again'; return; }
+    document.getElementById('quiz-' + id + '-pw').style.display = 'none';
+    document.getElementById('quiz-' + id + '-entry').style.display = 'flex';
+    document.getElementById('winner-' + id).focus();
+  }
+
+  function cancelQuiz(id) {
+    document.getElementById('quiz-' + id + '-pw').style.display = 'none';
+    document.getElementById('quiz-' + id + '-entry').style.display = 'none';
+    document.getElementById('unlock-' + id).style.display = 'inline-block';
   }
 
   function setWinner(id) {
@@ -1033,7 +1093,7 @@
     if (!name) { alert('Please enter a winner name.'); return; }
     db.ref('quizzes/' + id).set({ winner: name });
     document.getElementById('quiz-' + id + '-entry').style.display = 'none';
-    document.getElementById('unlock-' + id).style.display = '';
+    document.getElementById('unlock-' + id).style.display = 'inline-block';
     document.getElementById('winner-' + id).value = '';
   }
 

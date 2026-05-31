@@ -520,7 +520,7 @@
       <div style="display:flex;gap:10px;flex-wrap:wrap;">
         <button class="btn-fill" onclick="postNews()" data-en="Publish" data-ru="Опубликовать">Publish</button>
         <button class="btn-fill" onclick="deleteLastNews()" style="background:var(--text2);" data-en="Delete last" data-ru="Удалить последнюю">Delete last</button>
-        <button onclick="document.getElementById('news-add-form').style.display='none';document.getElementById('news-unlock-btn').style.display='';"
+        <button onclick="document.getElementById('news-add-form').style.display='none';document.getElementById('news-unlock-btn').style.display='inline-block';"
           style="background:none;border:none;cursor:pointer;font-size:12px;color:var(--text2);text-decoration:underline;letter-spacing:1px;" data-en="Cancel" data-ru="Отмена">Cancel</button>
       </div>
     </div>
@@ -987,7 +987,7 @@
   function unlockNews() {
     var pw = prompt('Enter password:');
     if (pw !== '0lgaF3st') { if (pw !== null) alert('Wrong password.'); return; }
-    document.getElementById('news-add-form').style.display = '';
+    document.getElementById('news-add-form').style.display = 'block';
     document.getElementById('news-unlock-btn').style.display = 'none';
   }
 
@@ -999,7 +999,7 @@
     document.getElementById('news-title-input').value = '';
     document.getElementById('news-body-input').value = '';
     document.getElementById('news-add-form').style.display = 'none';
-    document.getElementById('news-unlock-btn').style.display = '';
+    document.getElementById('news-unlock-btn').style.display = 'inline-block';
   }
 
   function deleteLastNews() {

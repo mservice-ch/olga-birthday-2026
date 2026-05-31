@@ -338,6 +338,32 @@
     .empty { text-align: center; color: var(--text2); opacity: 0.5; padding: 32px; font-size: 13px; }
 
     /* ─────────────────────────────────────
+       LATEST NEWS
+    ───────────────────────────────────── */
+    .news-sec { background: var(--white); }
+    .news-inner { max-width: 680px; margin: 0 auto; }
+    .news-item {
+      padding: 20px 24px; background: var(--cream);
+      border-left: 4px solid var(--coral);
+      box-shadow: 0 2px 12px rgba(42,31,24,0.06);
+      margin-bottom: 14px; animation: riseIn 0.4s forwards;
+    }
+    .news-item-title { font-weight: 600; font-size: 15px; color: var(--text); margin-bottom: 6px; }
+    .news-item-body { font-size: 14px; line-height: 1.8; color: var(--text2); }
+    .news-item-date { font-size: 10px; color: var(--text2); opacity: 0.5; margin-top: 8px; letter-spacing: 0.5px; }
+    .news-add-form {
+      display: none; margin-top: 24px; padding: 24px;
+      background: var(--cream2); border: 1px solid rgba(181,137,46,0.25);
+    }
+    .news-add-form input, .news-add-form textarea {
+      width: 100%; padding: 11px 14px; margin-bottom: 10px;
+      background: var(--white); border: 1px solid rgba(42,31,24,0.18);
+      border-radius: 2px; font-family: 'Jost', sans-serif; font-size: 13px;
+      color: var(--text); outline: none; resize: vertical;
+    }
+    .news-add-form input:focus, .news-add-form textarea:focus { border-color: var(--coral); }
+
+    /* ─────────────────────────────────────
        QUIZZES
     ───────────────────────────────────── */
     .quiz-card {
@@ -436,6 +462,15 @@
     <p class="hero-place" data-en="Bordighera · Italian Riviera · Liguria" data-ru="Бордигера · Итальянская Ривьера · Лигурия">Bordighera · Italian Riviera · Liguria</p>
   </div>
   <div class="hero-arrow"><span></span></div>
+
+  <!-- QR code -->
+  <div style="position:absolute;bottom:36px;right:32px;z-index:3;text-align:center;opacity:0;animation:riseIn 1s 2s forwards;">
+    <div style="background:rgba(253,245,232,0.92);backdrop-filter:blur(8px);padding:10px;border-radius:4px;display:inline-block;">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=https://olga-2026.margolin.info&bgcolor=fdf5e8&color=2a1f18&margin=2"
+        alt="QR code" width="90" height="90" style="display:block;">
+      <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text);margin-top:6px;opacity:0.6;">olga-2026.margolin.info</div>
+    </div>
+  </div>
 </div>
 
 <!-- ═══════════════════════════════════════
@@ -465,6 +500,32 @@
     </div>
   </div>
 </div>
+
+<!-- ═══════════════════════════════════════
+     LATEST NEWS
+════════════════════════════════════════ -->
+<section class="news-sec" id="latest-news">
+  <h2 class="sec-title" data-en="Latest <em>News</em>" data-ru="Последние <em>Новости</em>">Latest <em>News</em></h2>
+  <div class="sec-rule"></div>
+  <div class="news-inner">
+    <div id="news-list">
+      <p class="empty" data-en="No news yet — check back soon." data-ru="Новостей пока нет — заходите позже.">No news yet — check back soon.</p>
+    </div>
+    <div style="text-align:center;margin-top:28px;">
+      <button class="quiz-unlock-btn" onclick="unlockNews()" id="news-unlock-btn" data-en="Post news" data-ru="Добавить новость">Post news</button>
+    </div>
+    <div class="news-add-form" id="news-add-form">
+      <input type="text" id="news-title-input" placeholder="Headline / Заголовок" maxlength="80">
+      <textarea id="news-body-input" rows="3" placeholder="Details / Подробности" maxlength="500"></textarea>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn-fill" onclick="postNews()" data-en="Publish" data-ru="Опубликовать">Publish</button>
+        <button class="btn-fill" onclick="deleteLastNews()" style="background:var(--text2);" data-en="Delete last" data-ru="Удалить последнюю">Delete last</button>
+        <button onclick="document.getElementById('news-add-form').style.display='none';document.getElementById('news-unlock-btn').style.display='';"
+          style="background:none;border:none;cursor:pointer;font-size:12px;color:var(--text2);text-decoration:underline;letter-spacing:1px;" data-en="Cancel" data-ru="Отмена">Cancel</button>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ═══════════════════════════════════════
      EVENTS
@@ -905,6 +966,46 @@
     db.ref('origins').push({ name: name, country: country });
     document.getElementById('org-name').value = '';
     document.getElementById('org-country').value = '';
+  }
+
+  // Latest News
+  db.ref('news').on('value', function(snap) {
+    var el = document.getElementById('news-list');
+    var data = snap.val();
+    if (!data) { el.innerHTML = '<p class="empty">No news yet — check back soon.</p>'; return; }
+    var items = Object.entries(data).sort(function(a,b){ return b[1].ts - a[1].ts; });
+    el.innerHTML = items.map(function(entry) {
+      var item = entry[1];
+      return '<div class="news-item">' +
+        '<div class="news-item-title">' + esc(item.title) + '</div>' +
+        (item.body ? '<div class="news-item-body">' + esc(item.body) + '</div>' : '') +
+        '<div class="news-item-date">' + new Date(item.ts).toLocaleDateString('en-GB',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'}) + '</div>' +
+        '</div>';
+    }).join('');
+  });
+
+  function unlockNews() {
+    var pw = prompt('Enter password:');
+    if (pw !== '0lgaF3st') { if (pw !== null) alert('Wrong password.'); return; }
+    document.getElementById('news-add-form').style.display = '';
+    document.getElementById('news-unlock-btn').style.display = 'none';
+  }
+
+  function postNews() {
+    var title = document.getElementById('news-title-input').value.trim();
+    var body  = document.getElementById('news-body-input').value.trim();
+    if (!title) { alert('Please enter a headline.'); return; }
+    db.ref('news').push({ title: title, body: body, ts: Date.now() });
+    document.getElementById('news-title-input').value = '';
+    document.getElementById('news-body-input').value = '';
+    document.getElementById('news-add-form').style.display = 'none';
+    document.getElementById('news-unlock-btn').style.display = '';
+  }
+
+  function deleteLastNews() {
+    db.ref('news').orderByChild('ts').limitToLast(1).once('value', function(snap) {
+      snap.forEach(function(child) { child.ref.remove(); });
+    });
   }
 
   // Quizzes

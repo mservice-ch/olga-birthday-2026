@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Olga's Birthday — Bordighera 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream:   #fdf5e8;
+      --cream2:  #faefd6;
+      --coral:   #c94f2c;
+      --coral2:  #e8724f;
+      --blue:    #1c5b85;
+      --blue2:   #2e7db5;
+      --gold:    #b5892e;
+      --gold2:   #d4a84b;
+      --olive:   #5a6e3a;
+      --text:    #2a1f18;
+      --text2:   #5a4a3a;
+      --white:   #ffffff;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─────────────────────────────────────
+       LANGUAGE TOGGLE
+    ───────────────────────────────────── */
+    .lang-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: flex-end; padding: 14px 24px;
+      background: rgba(253,245,232,0.85); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(181,137,46,0.18);
+    }
+    .lang-btn {
+      padding: 5px 18px; border: 1px solid var(--gold);
+      background: transparent; color: var(--gold);
+      border-radius: 20px; cursor: pointer;
+      font-family: 'Jost', sans-serif; font-size: 11px;
+      font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+      transition: all 0.25s; margin-left: 8px;
+    }
+    .lang-btn.active {
+      background: var(--gold); color: var(--white);
+    }
+
+    /* ─────────────────────────────────────
+       HERO
+    ───────────────────────────────────── */
+    .hero {
+      position: relative; height: 100vh; min-height: 580px;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; overflow: hidden;
+    }
+    .hero-img {
+      position: absolute; inset: 0;
+      background-image: url('https://lh3.googleusercontent.com/pw/AP1GczOw9ZCr8P8D7zPKc7-r1rs0DOUrjwn_hn0IhPzg6NDeFq2xprDWPvT3p29xOITYZiBul37xSCP7hGVx4D_7wetXOZiy1RRS3gX6xJaVpusY7Ady8mXw=w1600');
+      background-size: cover; background-position: center 20%;
+    }
+    .hero-veil {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(253,245,232,0.08) 0%,
+        rgba(42,31,24,0.22) 40%,
+        rgba(42,31,24,0.72) 80%,
+        rgba(42,31,24,0.88) 100%
+      );
+    }
+    .hero-body { position: relative; z-index: 2; padding: 0 24px; }
+    .hero-eyebrow {
+      font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500;
+      letter-spacing: 6px; text-transform: uppercase; color: var(--gold2);
+      margin-bottom: 22px; opacity: 0; animation: riseIn 1s 0.4s forwards;
+    }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(56px, 9vw, 106px); font-weight: 400; line-height: 1.0;
+      color: var(--white); margin-bottom: 18px;
+      opacity: 0; animation: riseIn 1s 0.7s forwards;
+    }
+    .hero-sub {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: clamp(18px, 2.8vw, 28px); color: var(--gold2); font-weight: 400;
+      opacity: 0; animation: riseIn 1s 1.0s forwards;
+    }
+    .hero-place {
+      margin-top: 20px; font-size: 12px; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(255,255,255,0.65);
+      opacity: 0; animation: riseIn 1s 1.2s forwards;
+    }
+    .hero-arrow {
+      position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+      opacity: 0; animation: riseIn 1s 1.8s forwards;
+    }
+    .hero-arrow span {
+      display: block; width: 20px; height: 20px;
+      border-right: 2px solid var(--gold2); border-bottom: 2px solid var(--gold2);
+      transform: rotate(45deg); margin: 0 auto; animation: bob 1.8s infinite;
+    }
+
+    /* ─────────────────────────────────────
+       COUNTDOWN
+    ───────────────────────────────────── */
+    .countdown {
+      background: var(--white); padding: 56px 20px;
+      border-bottom: 1px solid var(--cream2);
+      text-align: center;
+    }
+    .cd-label {
+      font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--coral); margin-bottom: 30px; font-weight: 600;
+    }
+    .cd-row {
+      display: flex; justify-content: center; align-items: flex-start;
+      gap: 4px; flex-wrap: wrap;
+    }
+    .cd-unit { display: flex; flex-direction: column; align-items: center; min-width: 80px; }
+    .cd-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 8vw, 84px); font-weight: 600; line-height: 1;
+      color: var(--coral);
+    }
+    .cd-word {
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--text2); margin-top: 6px; font-weight: 500;
+    }
+    .cd-dot {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(48px, 7vw, 76px); color: var(--gold2);
+      opacity: 0.35; line-height: 1; padding-top: 8px;
+    }
+
+    /* ─────────────────────────────────────
+       GENERIC SECTION
+    ───────────────────────────────────── */
+    section { padding: 88px 24px; }
+    .sec-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(30px, 5vw, 48px); font-weight: 400; text-align: center;
+      margin-bottom: 10px; color: var(--text);
+    }
+    .sec-title em { font-style: italic; color: var(--coral); }
+    .sec-rule {
+      width: 48px; height: 1px; background: var(--gold); margin: 0 auto 48px; opacity: 0.5;
+    }
+    .sec-subtitle {
+      text-align: center; font-size: 13px; color: var(--text2);
+      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 48px;
+    }
+
+    /* ─────────────────────────────────────
+       EVENT CARDS
+    ───────────────────────────────────── */
+    .events-sec { background: var(--cream); }
+    .cards {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px; max-width: 880px; margin: 0 auto;
+    }
+    .card {
+      background: var(--white); border-radius: 4px;
+      border-top: 4px solid var(--coral);
+      padding: 40px 36px; box-shadow: 0 4px 32px rgba(42,31,24,0.07);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:nth-child(2) { border-top-color: var(--blue); }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 48px rgba(42,31,24,0.12);
+    }
+    .card-tag {
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--coral); margin-bottom: 10px; font-weight: 600;
+    }
+    .card:nth-child(2) .card-tag { color: var(--blue); }
+    .card-title {
+      font-family: 'Cormorant Garamond', serif; font-size: 28px;
+      margin-bottom: 14px; font-weight: 500;
+    }
+    .card-time {
+      font-size: 38px; font-weight: 300; color: var(--gold);
+      font-family: 'Cormorant Garamond', serif; margin-bottom: 16px; line-height: 1;
+    }
+    .card-desc { font-size: 14px; line-height: 1.85; color: var(--text2); }
+
+    /* ─────────────────────────────────────
+       PHOTO GALLERY
+    ───────────────────────────────────── */
+    .gallery-sec { background: var(--text); padding: 72px 0; }
+    .gallery-sec .sec-title { color: var(--cream); }
+    .gallery-sec .sec-rule { background: var(--gold2); margin-bottom: 40px; }
+    .gallery-label {
+      font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--gold2); text-align: center; margin-bottom: 48px; opacity: 0.8;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 260px 260px;
+      gap: 4px; max-width: 1100px; margin: 0 auto;
+    }
+    @media (max-width: 700px) {
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(3, 200px);
+      }
+      .gallery-featured { grid-column: 1 / -1; }
+    }
+    .gallery-item {
+      overflow: hidden; position: relative; cursor: pointer;
+    }
+    .gallery-featured {
+      grid-column: 1 / 3; grid-row: 1 / 2;
+    }
+    .gallery-item img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease; display: block;
+    }
+    .gallery-item:hover img { transform: scale(1.04); }
+    .gallery-cap {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 12px 16px;
+      background: linear-gradient(transparent, rgba(42,31,24,0.6));
+      color: rgba(255,255,255,0.8); font-size: 10px;
+      letter-spacing: 2px; text-transform: uppercase; opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .gallery-item:hover .gallery-cap { opacity: 1; }
+
+    /* ─────────────────────────────────────
+       LOCATION
+    ───────────────────────────────────── */
+    .loc-sec { background: var(--white); }
+    .loc-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; max-width: 940px; margin: 0 auto; align-items: start;
+    }
+    @media (max-width: 660px) { .loc-grid { grid-template-columns: 1fr; } }
+    .loc-photo {
+      border-radius: 2px; overflow: hidden;
+      box-shadow: 0 8px 48px rgba(42,31,24,0.14);
+    }
+    .loc-photo img { width: 100%; height: 320px; object-fit: cover; display: block; }
+    .loc-text h3 {
+      font-family: 'Cormorant Garamond', serif; font-size: 28px;
+      margin-bottom: 16px; font-weight: 500;
+    }
+    .loc-text p { font-size: 14px; line-height: 1.9; color: var(--text2); margin-bottom: 20px; }
+    .loc-address {
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--text2); opacity: 0.6; margin-bottom: 28px; display: block;
+    }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 13px 28px; border: 1.5px solid var(--coral); color: var(--coral);
+      border-radius: 2px; text-decoration: none; font-size: 12px;
+      font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+      transition: all 0.25s;
+    }
+    .btn-outline:hover { background: var(--coral); color: var(--white); }
+    .map-wrap { margin-top: 40px; border-radius: 2px; overflow: hidden; height: 260px; box-shadow: 0 4px 24px rgba(42,31,24,0.1); }
+    .map-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+
+    /* ─────────────────────────────────────
+       PROGRAM
+    ───────────────────────────────────── */
+    .prog-sec { background: var(--cream2); }
+    .prog-holder {
+      text-align: center; padding: 64px 24px;
+      border: 1px solid rgba(181,137,46,0.3); max-width: 560px; margin: 0 auto;
+      background: var(--white);
+    }
+    .prog-holder p { font-size: 15px; line-height: 1.9; color: var(--text2); }
+
+    /* ─────────────────────────────────────
+       GUEST ORIGINS
+    ───────────────────────────────────── */
+    .origins-sec { background: var(--white); }
+    .origins-inner { max-width: 680px; margin: 0 auto; }
+    .origin-form { display: flex; gap: 10px; margin-bottom: 32px; flex-wrap: wrap; }
+    .origin-form input, .origin-form select {
+      flex: 1; min-width: 130px; padding: 12px 16px;
+      background: var(--cream); border: 1px solid rgba(42,31,24,0.18);
+      border-radius: 2px; color: var(--text); font-family: 'Jost', sans-serif;
+      font-size: 13px; outline: none; transition: border-color 0.25s;
+    }
+    .origin-form input:focus, .origin-form select:focus { border-color: var(--coral); }
+    .origin-form input::placeholder { color: var(--text2); opacity: 0.5; }
+    .origin-form select option { background: var(--white); }
+    .btn-fill {
+      padding: 12px 24px; background: var(--coral); color: var(--white);
+      border: none; border-radius: 2px; font-family: 'Jost', sans-serif;
+      font-weight: 600; font-size: 12px; letter-spacing: 1.5px;
+      text-transform: uppercase; cursor: pointer; transition: background 0.25s;
+      white-space: nowrap;
+    }
+    .btn-fill:hover { background: var(--coral2); }
+    .btn-fill.blue { background: var(--blue); }
+    .btn-fill.blue:hover { background: var(--blue2); }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 16px; background: var(--cream2);
+      border: 1px solid rgba(181,137,46,0.25); border-radius: 2px;
+      font-size: 13px; color: var(--text);
+    }
+
+    /* ─────────────────────────────────────
+       MESSAGE BOARD
+    ───────────────────────────────────── */
+    .msg-sec { background: var(--cream2); }
+    .msg-inner { max-width: 680px; margin: 0 auto; }
+    .msg-form input, .msg-form textarea {
+      width: 100%; padding: 13px 16px;
+      background: var(--white); border: 1px solid rgba(42,31,24,0.18);
+      border-radius: 2px; color: var(--text); font-family: 'Jost', sans-serif;
+      font-size: 13px; margin-bottom: 10px; outline: none; resize: vertical;
+      transition: border-color 0.25s;
+    }
+    .msg-form input:focus, .msg-form textarea:focus { border-color: var(--blue); }
+    .msg-form input::placeholder, .msg-form textarea::placeholder { color: var(--text2); opacity: 0.5; }
+    .msgs { display: flex; flex-direction: column; gap: 12px; margin-top: 36px; }
+    .msg-card {
+      background: var(--white); border-left: 3px solid var(--blue);
+      padding: 18px 22px; animation: riseIn 0.4s forwards;
+      box-shadow: 0 2px 12px rgba(42,31,24,0.06);
+    }
+    .msg-author { font-weight: 600; font-size: 13px; color: var(--blue); margin-bottom: 5px; }
+    .msg-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .msg-date { font-size: 10px; color: var(--text2); opacity: 0.5; margin-top: 8px; letter-spacing: 0.5px; }
+    .empty { text-align: center; color: var(--text2); opacity: 0.5; padding: 32px; font-size: 13px; }
+
+    /* Firebase notice */
+    .fb-box {
+      background: #fff8ec; border: 1px solid rgba(181,137,46,0.35);
+      padding: 18px 22px; margin-bottom: 24px; font-size: 13px; line-height: 1.8;
+      color: var(--text2);
+    }
+    .fb-box strong { color: var(--gold); display: block; margin-bottom: 4px; }
+    .fb-box a { color: var(--coral); font-weight: 600; }
+
+
+    /* ─────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────── */
+    footer {
+      background: var(--text); padding: 44px 24px; text-align: center;
+    }
+    footer p { color: rgba(253,245,232,0.4); font-size: 12px; letter-spacing: 1px; }
+    footer .heart { color: var(--coral2); }
+
+    /* ─────────────────────────────────────
+       ANIMATIONS
+    ───────────────────────────────────── */
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bob {
+      0%, 100% { transform: rotate(45deg) translateY(0); }
+      50%       { transform: rotate(45deg) translateY(7px); }
+    }
+
+    /* ─────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────── */
+    @media (max-width: 480px) {
+      section { padding: 64px 18px; }
+      .cd-row { gap: 2px; }
+      .origin-form { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Language bar -->
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('en')" id="btn-en">EN</button>
+  <button class="lang-btn" onclick="setLang('ru')" id="btn-ru">RU</button>
+</div>
+
+<!-- ═══════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-img"></div>
+  <div class="hero-veil"></div>
+  <div class="hero-body">
+    <p class="hero-eyebrow" data-en="You are warmly invited" data-ru="Вас приглашают">You are warmly invited</p>
+    <h1 class="hero-name">Olga Margolin</h1>
+    <p class="hero-sub" data-en="Birthday Celebration — June 2026" data-ru="День Рождения — Июнь 2026">Birthday Celebration — June 2026</p>
+    <p class="hero-place" data-en="Bordighera · Italian Riviera · Liguria" data-ru="Бордигера · Итальянская Ривьера · Лигурия">Bordighera · Italian Riviera · Liguria</p>
+  </div>
+  <div class="hero-arrow"><span></span></div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     COUNTDOWN
+════════════════════════════════════════ -->
+<div class="countdown">
+  <p class="cd-label" data-en="Countdown to the celebration" data-ru="До праздника осталось">Countdown to the celebration</p>
+  <div class="cd-row">
+    <div class="cd-unit">
+      <div class="cd-num" id="cd-d">--</div>
+      <div class="cd-word" data-en="days" data-ru="дней">days</div>
+    </div>
+    <div class="cd-dot">:</div>
+    <div class="cd-unit">
+      <div class="cd-num" id="cd-h">--</div>
+      <div class="cd-word" data-en="hours" data-ru="часов">hours</div>
+    </div>
+    <div class="cd-dot">:</div>
+    <div class="cd-unit">
+      <div class="cd-num" id="cd-m">--</div>
+      <div class="cd-word" data-en="minutes" data-ru="минут">minutes</div>
+    </div>
+    <div class="cd-dot">:</div>
+    <div class="cd-unit">
+      <div class="cd-num" id="cd-s">--</div>
+      <div class="cd-word" data-en="seconds" data-ru="секунд">seconds</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     EVENTS
+════════════════════════════════════════ -->
+<section class="events-sec">
+  <h2 class="sec-title" data-en="The <em>Celebration</em>" data-ru="<em>Праздник</em>">The <em>Celebration</em></h2>
+  <div class="sec-rule"></div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-tag" data-en="Friday — June 5, 2026" data-ru="Пятница — 5 июня 2026">Friday — June 5, 2026</div>
+      <div class="card-title" data-en="Aperitivo Evening" data-ru="Вечер Аперитива">Aperitivo Evening</div>
+      <div class="card-time">18:00</div>
+      <div class="card-desc" data-en="A relaxed sunset aperitivo by the Ligurian Sea. Sip, mingle, and soak in the warmth of the Italian Riviera." data-ru="Расслабленный аперитив на закате у Лигурийского моря. Коктейли, общение и тепло Итальянской Ривьеры.">A relaxed sunset aperitivo by the Ligurian Sea. Sip, mingle, and soak in the warmth of the Italian Riviera.</div>
+    </div>
+    <div class="card">
+      <div class="card-tag" data-en="Saturday — June 6, 2026" data-ru="Суббота — 6 июня 2026">Saturday — June 6, 2026</div>
+      <div class="card-title" data-en="Birthday Dinner Party" data-ru="Праздничный Ужин">Birthday Dinner Party</div>
+      <div class="card-time">18:00 — night</div>
+      <div class="card-desc" data-en="The main celebration — an unforgettable dinner party right on the beach, lasting well into the night. Dress beautifully." data-ru="Главный вечер — незабываемый праздничный ужин прямо у моря, продолжающийся до самой ночи. Наденьте лучшее.">The main celebration — an unforgettable dinner party right on the beach, lasting well into the night. Dress beautifully.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     PHOTO GALLERY — BORDIGHERA & LIGURIA
+════════════════════════════════════════ -->
+<section class="gallery-sec">
+  <p class="gallery-label" data-en="Bordighera &amp; the Italian Riviera" data-ru="Бордигера и Итальянская Ривьера">Bordighera &amp; the Italian Riviera</p>
+  <div class="gallery-grid">
+
+    <!-- Featured wide image -->
+    <div class="gallery-item gallery-featured">
+      <img
+        src="https://images.unsplash.com/photo-1529303875971-f52b9552f3b4?w=1200&q=82&auto=format&fit=crop"
+        alt="Bordighera coastline, Italian Riviera" loading="lazy">
+      <div class="gallery-cap">Liguria Coastline</div>
+    </div>
+
+    <!-- Right column top -->
+    <div class="gallery-item">
+      <img
+        src="https://images.unsplash.com/photo-1559139061-28d9de44e40e?w=600&q=80&auto=format&fit=crop"
+        alt="Colourful houses, Liguria" loading="lazy">
+      <div class="gallery-cap">Ligurian Village</div>
+    </div>
+
+    <!-- Second row -->
+    <div class="gallery-item">
+      <img
+        src="https://images.unsplash.com/photo-1554382408-8856a1c27a88?w=600&q=80&auto=format&fit=crop"
+        alt="Aerial Mediterranean sea, Liguria" loading="lazy">
+      <div class="gallery-cap">Mediterranean Sea</div>
+    </div>
+
+    <div class="gallery-item">
+      <img
+        src="https://images.unsplash.com/photo-1676457014906-9cdec144a728?w=600&q=80&auto=format&fit=crop"
+        alt="Ligurian village on the cliff" loading="lazy">
+      <div class="gallery-cap">Cliffside Village</div>
+    </div>
+
+    <div class="gallery-item">
+      <img
+        src="https://images.unsplash.com/photo-1594822515320-8caded61971a?w=600&q=80&auto=format&fit=crop"
+        alt="Colourful houses by the sea, Liguria" loading="lazy">
+      <div class="gallery-cap">Italian Riviera</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     LOCATION / VENUE
+════════════════════════════════════════ -->
+<section class="loc-sec">
+  <h2 class="sec-title" data-en="The <em>Venue</em>" data-ru="<em>Место</em>">The <em>Venue</em></h2>
+  <div class="sec-rule"></div>
+  <div class="loc-grid">
+
+    <div class="loc-photo">
+      <img
+        src="https://images.unsplash.com/photo-1590141302903-3f6f3631b53f?w=800&q=82&auto=format&fit=crop"
+        alt="Saalino Beach Bar area, Bordighera" loading="lazy">
+    </div>
+
+    <div class="loc-text">
+      <h3>Saalino Beach Bar</h3>
+      <p data-en="Nestled on the Bordighera waterfront along the Lungomare Argentina. The sound of gentle waves, warm sand underfoot, and the golden light of a Ligurian sunset — this is where we celebrate." data-ru="На набережной Бордигеры вдоль Лунгомаре Аргентина. Шум волн, тёплый песок и золотой свет лигурийского заката — именно здесь мы отмечаем праздник.">Nestled on the Bordighera waterfront along the Lungomare Argentina. The sound of gentle waves, warm sand underfoot, and the golden light of a Ligurian sunset — this is where we celebrate.</p>
+      <span class="loc-address">Bordighera · Liguria · Italy</span>
+      <a href="https://maps.app.goo.gl/GTR67W3cvM1RBWXv5" target="_blank" class="btn-outline">
+        Open in Google Maps
+      </a>
+      <div class="map-wrap">
+        <iframe
+          src="https://maps.google.com/maps?q=Saalino+Beach+Bar+Bordighera&output=embed&z=15&hl=en"
+          allowfullscreen loading="lazy">
+        </iframe>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     PROGRAM
+════════════════════════════════════════ -->
+<section class="prog-sec">
+  <h2 class="sec-title" data-en="The <em>Program</em>" data-ru="<em>Программа</em>">The <em>Program</em></h2>
+  <div class="sec-rule"></div>
+  <div class="prog-holder">
+    <p data-en="The full program for both evenings will be announced soon. Watch this space." data-ru="Полная программа обоих вечеров будет объявлена совсем скоро. Следите за обновлениями.">The full program for both evenings will be announced soon. Watch this space.</p>
+  </div>
+  <!--
+  ════════════════════════════════════════
+  TO ADD PROGRAM: replace the prog-holder div above with:
+
+  <div style="max-width:700px;margin:0 auto;display:grid;gap:24px;">
+
+    <div style="background:var(--white);padding:32px;border-top:3px solid var(--coral);">
+      <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--coral);font-weight:600;margin-bottom:16px;">
+        Friday — June 5
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="display:flex;gap:20px;font-size:14px;line-height:1.7;color:var(--text2);">
+          <span style="color:var(--gold);font-weight:600;min-width:52px;font-family:'Cormorant Garamond',serif;font-size:16px;">18:00</span>
+          <span>Welcome aperitivo</span>
+        </div>
+        ... more items ...
+      </div>
+    </div>
+
+    <div style="background:var(--white);padding:32px;border-top:3px solid var(--blue);">
+      ... Saturday June 6 program ...
+    </div>
+
+  </div>
+  ════════════════════════════════════════
+  -->
+</section>
+
+<!-- ═══════════════════════════════════════
+     GUEST ORIGINS
+════════════════════════════════════════ -->
+<section class="origins-sec">
+  <h2 class="sec-title" data-en="Where Are You <em>Joining From?</em>" data-ru="Откуда <em>Вы?</em>">Where Are You <em>Joining From?</em></h2>
+  <div class="sec-rule"></div>
+  <div class="origins-inner">
+    <div class="origin-form">
+      <input type="text" id="org-name" placeholder="Your name / Ваше имя" maxlength="30">
+      <select id="org-country">
+        <option value="">Select country / Страна</option>
+        <option>Argentina</option><option>Australia</option><option>Austria</option>
+        <option>Belarus</option><option>Belgium</option><option>Brazil</option>
+        <option>Canada</option><option>Cyprus</option><option>Czech Republic</option>
+        <option>Denmark</option><option>Estonia</option><option>Finland</option>
+        <option>France</option><option>Georgia</option><option>Germany</option>
+        <option>Greece</option><option>Hungary</option><option>Israel</option>
+        <option>Italy</option><option>Japan</option><option>Kazakhstan</option>
+        <option>Latvia</option><option>Lithuania</option><option>Moldova</option>
+        <option>Monaco</option><option>Netherlands</option><option>Norway</option>
+        <option>Poland</option><option>Portugal</option><option>Russia</option>
+        <option>Serbia</option><option>Slovakia</option><option>Spain</option>
+        <option>Sweden</option><option>Switzerland</option><option>Turkey</option>
+        <option>UAE</option><option>Ukraine</option><option>United Kingdom</option>
+        <option>USA</option><option>Uzbekistan</option>
+      </select>
+      <button class="btn-fill" onclick="addOrigin()" data-en="Pin me" data-ru="Отметить">Pin me</button>
+    </div>
+    <div class="chips" id="origins-chips">
+      <p class="empty" data-en="Be the first to mark your location!" data-ru="Отметьтесь первым!">Be the first to mark your location!</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     MESSAGE BOARD
+════════════════════════════════════════ -->
+<section class="msg-sec">
+  <h2 class="sec-title" data-en="Leave a <em>Message</em> for Olga" data-ru="<em>Поздравление</em> для Ольги">Leave a <em>Message</em> for Olga</h2>
+  <div class="sec-rule"></div>
+  <div class="msg-inner">
+    <div class="msg-form">
+      <input type="text" id="msg-name" placeholder="Your name / Ваше имя" maxlength="50">
+      <textarea id="msg-text" rows="3" placeholder="Your message for Olga / Ваше поздравление для Ольги" maxlength="500"></textarea>
+      <button class="btn-fill blue" onclick="submitMsg()" data-en="Send with love" data-ru="Отправить с любовью">Send with love</button>
+    </div>
+    <div class="msgs" id="msgs-list">
+      <p class="empty" data-en="Messages will appear here once Firebase is set up." data-ru="Сообщения появятся после настройки Firebase.">Messages will appear here once Firebase is set up.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer>
+  <p>Made with <span class="heart">love</span> for Olga Margolin &nbsp;&mdash;&nbsp; Bordighera 2026</p>
+</footer>
+
+<!-- ═══════════════════════════════════════
+     FIREBASE
+════════════════════════════════════════ -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js';
+  import { getDatabase, ref, push, onValue } from 'https://www.gstatic.com/firebasejs/12.14.0/firebase-database.js';
+
+  const firebaseConfig = {
+    apiKey:            "AIzaSyAsNdxoD9Syq011L8lOdXDspY46AK44xd8",
+    authDomain:        "olga-birthday-be406.firebaseapp.com",
+    databaseURL:       "https://olga-birthday-be406-default-rtdb.firebaseio.com",
+    projectId:         "olga-birthday-be406",
+    storageBucket:     "olga-birthday-be406.firebasestorage.app",
+    messagingSenderId: "303268757868",
+    appId:             "1:303268757868:web:36e10585409fe93a7ef349"
+  };
+
+  const ready = !firebaseConfig.apiKey.includes('YOUR_');
+  let db;
+
+  if (ready) {
+    document.getElementById('fb-notice').style.display = 'none';
+    const app = initializeApp(firebaseConfig);
+    db = getDatabase(app);
+
+    onValue(ref(db, 'messages'), snap => {
+      const el = document.getElementById('msgs-list');
+      const data = snap.val();
+      if (!data) { el.innerHTML = '<p class="empty">Be the first to leave a message!</p>'; return; }
+      el.innerHTML = Object.values(data).reverse().map(m => `
+        <div class="msg-card">
+          <div class="msg-author">${esc(m.name)}</div>
+          <div class="msg-body">${esc(m.text)}</div>
+          <div class="msg-date">${new Date(m.ts).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}</div>
+        </div>`).join('');
+    });
+
+    onValue(ref(db, 'origins'), snap => {
+      const el = document.getElementById('origins-chips');
+      const data = snap.val();
+      if (!data) { el.innerHTML = '<p class="empty">Be the first to mark your location!</p>'; return; }
+      el.innerHTML = Object.values(data).map(o =>
+        `<div class="chip">${esc(o.name)} &mdash; ${esc(o.country)}</div>`
+      ).join('');
+    });
+  }
+
+  window.submitMsg = () => {
+    const name = document.getElementById('msg-name').value.trim();
+    const text = document.getElementById('msg-text').value.trim();
+    if (!ready) { alert('Firebase not set up yet — see the guide below.'); return; }
+    if (!name || !text) { alert('Please fill in your name and a message.'); return; }
+    push(ref(db, 'messages'), { name, text, ts: Date.now() });
+    document.getElementById('msg-name').value = '';
+    document.getElementById('msg-text').value = '';
+  };
+
+  window.addOrigin = () => {
+    const name = document.getElementById('org-name').value.trim();
+    const country = document.getElementById('org-country').value;
+    if (!ready) { alert('Firebase not set up yet — see the guide below.'); return; }
+    if (!name || !country) { alert('Please enter your name and select a country.'); return; }
+    push(ref(db, 'origins'), { name, country });
+    document.getElementById('org-name').value = '';
+    document.getElementById('org-country').value = '';
+  };
+
+  function esc(s) {
+    const d = document.createElement('div');
+    d.appendChild(document.createTextNode(String(s)));
+    return d.innerHTML;
+  }
+</script>
+
+<!-- ═══════════════════════════════════════
+     COUNTDOWN + LANGUAGE
+════════════════════════════════════════ -->
+<script>
+  const TARGET = new Date('2026-06-05T18:00:00+02:00');
+
+  function tick() {
+    const diff = TARGET - Date.now();
+    if (diff <= 0) {
+      ['cd-d','cd-h','cd-m','cd-s'].forEach(id =>
+        document.getElementById(id).textContent = '—');
+      return;
+    }
+    const pad = n => String(n).padStart(2, '0');
+    document.getElementById('cd-d').textContent = pad(Math.floor(diff / 86400000));
+    document.getElementById('cd-h').textContent = pad(Math.floor((diff % 86400000) / 3600000));
+    document.getElementById('cd-m').textContent = pad(Math.floor((diff % 3600000) / 60000));
+    document.getElementById('cd-s').textContent = pad(Math.floor((diff % 60000) / 1000));
+  }
+  tick(); setInterval(tick, 1000);
+
+  window.setLang = function(lang) {
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const v = el.getAttribute('data-' + lang);
+      if (v) el.innerHTML = v;
+    });
+    const ru = lang === 'ru';
+    document.getElementById('org-name').placeholder   = ru ? 'Ваше имя' : 'Your name / Ваше имя';
+    document.getElementById('msg-name').placeholder   = ru ? 'Ваше имя' : 'Your name / Ваше имя';
+    document.getElementById('msg-text').placeholder   = ru ? 'Ваше поздравление для Ольги' : 'Your message for Olga / Ваше поздравление для Ольги';
+  };
+</script>
+</body>
+</html>
